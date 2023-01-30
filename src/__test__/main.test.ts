@@ -1,12 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-
+import { toggleTodo, createHtml } from "../ts/main";
 import * as main from '../ts/main';
 import * as func from '../ts/functions';
 import { Todo } from '../ts/models/Todo';
-import { displayError, toggleTodo, clearTodos } from "../ts/main";
-import { addTodo, changeTodo, removeAllTodos } from "../ts/functions";
+
+
 
 
 beforeEach(() => {
@@ -20,6 +20,7 @@ afterEach(() => {
 
 
 test('should clear todos', () => {
+
 	document.body.innerHTML =
 		'<ul id="todos" class="todo">' +
 		'<li class="todo__text">Todo 1</li>' +
@@ -39,7 +40,7 @@ test('should clear todos', () => {
 
 
 });
-////////////////////////////////////////////////////////////////////////
+
 test('Should create HTML', () => {
 	document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
 
@@ -58,9 +59,7 @@ test('Should create HTML', () => {
 	main.createHtml(todos);
 
 	expect(document.querySelector('#todos')?.outerHTML).toEqual(todosExpect);
-	//expect(toggleTodo).toHaveBeenCalledWith(todos[i]);
-	// expect(toggleTodo).toHaveBeenCalledWith('click');
-	//	expect().toHaveBeenCalled();
+
 });
 
 test('should display error message', () => {
@@ -120,23 +119,15 @@ test('Should toggle todo', () => {
 		'<li class="todo__text">Todo 1</li>' +
 		'</ul>';
 
-	const todos: Todo[] = [
-		{ text: 'Todo 1', done: false },
-	];
+	const todos: Todo = { text: 'Todo 1', done: false };
 
-	const spy = jest.spyOn(func, 'changeTodo');
+	const spy = jest.spyOn(func, 'changeTodo').mockReturnValue();;
 
 
+	main.toggleTodo(todos);
 
-	main.toggleTodo(todos[0]);
+	expect(spy).toBeCalled();
 
-	expect(spy).toHaveBeenCalled();
+
 });
-
-/*
-test('test', () => {
-
-
-})*/
-
 
